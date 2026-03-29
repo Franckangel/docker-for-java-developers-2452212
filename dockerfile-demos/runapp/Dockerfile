@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk
+FROM mcr.microsoft.com/openjdk/jdk:17-ubuntu
 ADD app /app
 WORKDIR /app
 CMD ["java", "Forever", "-cp", "lombok.jar"]

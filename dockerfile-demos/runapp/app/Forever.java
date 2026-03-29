@@ -6,3 +6,7 @@ public class Forever {
         Thread.currentThread().join();
     }
 }
+
+/*
+    Alpine is a slimmed down image of a Linux operation system.
+ */

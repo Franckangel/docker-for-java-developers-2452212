@@ -1,3 +1,3 @@
-FROM openjdk:11-jdk
+FROM  mcr.microsoft.com/openjdk/jdk:17-ubuntu
 COPY ./Hello.class /
 CMD ["java", "Hello"]
