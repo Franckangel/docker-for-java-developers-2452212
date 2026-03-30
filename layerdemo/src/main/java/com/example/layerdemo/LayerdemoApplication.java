@@ -18,3 +18,21 @@ public class LayerdemoApplication {
 	}
 
 }
+
+/*
+
+DOCKER BEST PRACITCES
+
+IMAGE LAYERS
+
+- Image layers are grouped by the action of each dockerfile instruction.
+- A collection of files resulting from a Dockerfile instruction.
+
+LAYERING BEST PRACTICES
+
+- Import lightest (less layers) image possible
+- Start with stable, verified, non-changing version images
+- Only add files you need
+- Order DockerFile from least to most frequently changed
+
+ */

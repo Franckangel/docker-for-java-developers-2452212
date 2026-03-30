@@ -3,7 +3,7 @@
 # Using a version tagged starting image
 # Combined OS and Java Run Time
 # JRE instead of JDK
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:17-jre
 
 # Does not change, Moved to Second instruction
 WORKDIR /app

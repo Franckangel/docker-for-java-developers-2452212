@@ -1,5 +1,13 @@
 FROM alpine:latest
 ADD ./ /app/
-RUN apk add openjdk11
+RUN apk add openjdk17-jdk
 WORKDIR /app
 CMD ["java", "-jar", "target/layerdemo-0.0.1-SNAPSHOT.jar"]
+
+
+#PROBLEMS IN A BADLY LAYERED DOCKER FILE
+# ALpine:latest isn't a fix version so it can change
+# Start with an image that combines the OS and java
+# Add only the JAR file NOT the whole project
+# Add JAR file before CMD
+# You don't need JDK, as JRE is sufficient
