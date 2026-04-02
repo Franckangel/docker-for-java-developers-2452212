@@ -1,24 +1,57 @@
+#services:
+#  db:
+#    image: postgres
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#    environment:
+#      - POSTGRES_DB=blogdemo
+#      - POSTGRES_PASSWORD=lmnop
+#    expose:
+#      - 5432
+#    restart: always
+#  app:
+#    build: blog-backend
+#    ports:
+#      - 8080:8080
+#    environment:
+#      - POSTGRES_DB=blogdemo
+#      - POSTGRES_HOST=db
+#      - POSTGRES_PASSWORD=lmnop
+#    depends_on:
+#      - db
+#    restart: always
+#volumes:
+#  db-data:
+
 services:
   db:
-    image: postgres
+    image: postgres:16
+    environment:
+      POSTGRES_DB: blogdemo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lmnop
     volumes:
       - db-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=blogdemo
-      - POSTGRES_PASSWORD=lmnop
-    expose:
-      - 5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d blogdemo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: always
+
   app:
     build: blog-backend
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      - POSTGRES_DB=blogdemo
-      - POSTGRES_HOST=db
-      - POSTGRES_PASSWORD=lmnop
+      POSTGRES_DB: blogdemo
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lmnop
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     restart: always
+
 volumes:
   db-data:

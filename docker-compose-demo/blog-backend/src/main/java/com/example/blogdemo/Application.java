@@ -60,3 +60,59 @@ public class Application {
 
 
 }
+
+/*
+    ORCHESTRATION
+
+    Running related containers is called orchestration. It can be done manually (Docker CLI) or through tools such as:
+    - Docker compose
+    - Docker swarm
+    - kubernetes
+
+    Manual orchestration :
+
+    * First we create a network called blog-network
+    docker network create blog-network (Any containers included in this network can refer to each other by name)
+
+    * Create an image for blog-backend
+    docker build -t blog-backend .
+
+    *Then run the postgres image to have a Postgres container
+    docker run --name db \
+            -network blog-network \
+            -v db-data:/var/lib/postgresql/data \
+            -p 5432:5432
+            -e POSTGRES_DB=blogdemo \
+            -e POSTGRES_PASSWORD=lmnop \
+            -d postgres
+
+    *Run the block-backend image as an app
+    docker run --name app \
+            -p 8080:8080 \
+            -network blog-network \
+            -e POSTGRES_HOST=db \
+            -e POSTGRES_DB=blogdemo \
+            -e PSOTGRES_PASSWORD=lmnop \
+            -d blog-backend
+
+    MANUAL ORCHESTRATION
+
+    To manually monitor this containers
+    docker logs db
+    docker logs app
+    curl localhost:8080/actuator/health
+
+    To shut it down
+    docker stop postgres-db
+    docker stop blog-backend-app
+    docker rm postgres-db
+    docker network rm blog-network
+
+    AUTOMATED ORCHESTRATION
+
+    Configuration file: docker-compose.yml
+    startup : docker-compose up (to start all the containers)
+    Monitoring is provided by docker compose daemon
+
+
+ */
